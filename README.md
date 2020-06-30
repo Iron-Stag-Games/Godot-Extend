@@ -1,4 +1,4 @@
-# Extend Spatial
+# Extend
 
 Adds six dimensional handles for scaling Spatials.
 
