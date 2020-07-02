@@ -1,4 +1,31 @@
+#************************************************************************#
+#  ExtendGizmo.gd                                                        #
+#************************************************************************#
+#                        This file is part of:                           #
+#                               EXTEND                                   #
+#                https://github.com/hoontee/godot-extend                 #
+#************************************************************************#
+#  Copyright (c) 2020 hoontee @ Iron Stag Games.                         #
+#                                                                        #
+#  Extend is free software: you can redistribute it and/or modify        #
+#  it under the terms of the GNU General Public License as published by  #
+#  the Free Software Foundation, either version 3 of the License, or     #
+#  (at your option) any later version.                                   #
+#                                                                        #
+#  Extend is distributed in the hope that it will be useful,             #
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+#  GNU General Public License for more details.                          #
+#                                                                        #
+#  You should have received a copy of the GNU General Public License     #
+#  along with Extend.  If not, see <https://www.gnu.org/licenses/>.      #
+#************************************************************************#
+
 extends EditorSpatialGizmo
+
+const snap := 0.05
+const snap_key := KEY_CONTROL
+const scale_all_key := KEY_SHIFT
 
 var spatial: Spatial
 var gt: Transform
@@ -81,8 +108,10 @@ func set_handle(index: int, camera: Camera, point: Vector2) -> void:
 		axis[index%3] = 1.0
 	var arr := Geometry.get_closest_points_between_segments(Vector3.ZERO, axis * 4096, sg[0], sg[1]);
 	var d := arr[1][index%3]
-	if Input.is_key_pressed(KEY_CONTROL):
-		d = stepify(d, 0.1)
+	if Input.is_key_pressed(snap_key):
+		d = stepify(d, snap)
+	else:
+		d = stepify(d, 0.001)
 	if index > 2:
 		d = max(-d, 0.001)
 	else:
@@ -102,7 +131,7 @@ func set_handle(index: int, camera: Camera, point: Vector2) -> void:
 		5:
 			spatial.global_transform.origin = gt.orthonormalized().translated(Vector3(0, 0, -d*0.5 + 0.5*scale.z)).origin
 	
-	if Input.is_key_pressed(KEY_SHIFT):
+	if Input.is_key_pressed(scale_all_key):
 		match index%3:
 			0:
 				spatial.scale = scale*(d/scale.x)
