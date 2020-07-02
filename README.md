@@ -1,7 +1,5 @@
 # Extend
 
-Adds six dimensional handles for scaling Spatials.
+Adds six directional handles for scaling Spatials. Define applicable classes in [extend.gd](addons/extend/extend.gd).
 
-Adjusts the Spatial's origin to the direction of scaling.
-
-Define applicable classes in extend.gd. By default, only StaticBody is included.
+Hold CONTROL for Snap and SHIFT for Scale All. Change snap increment and keyboard shortcuts in [ExtendGizmo.gd](addons/extend/ExtendGizmo.gd).
