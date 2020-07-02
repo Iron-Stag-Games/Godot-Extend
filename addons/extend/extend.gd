@@ -1,12 +1,34 @@
+#************************************************************************#
+#  extend.gd                                                             #
+#************************************************************************#
+#                        This file is part of:                           #
+#                               EXTEND                                   #
+#                https://github.com/hoontee/godot-extend                 #
+#************************************************************************#
+#  Copyright (c) 2020 hoontee @ Iron Stag Games.                         #
+#                                                                        #
+#  Extend is free software: you can redistribute it and/or modify        #
+#  it under the terms of the GNU General Public License as published by  #
+#  the Free Software Foundation, either version 3 of the License, or     #
+#  (at your option) any later version.                                   #
+#                                                                        #
+#  Extend is distributed in the hope that it will be useful,             #
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of        #
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         #
+#  GNU General Public License for more details.                          #
+#                                                                        #
+#  You should have received a copy of the GNU General Public License     #
+#  along with Extend.  If not, see <https://www.gnu.org/licenses/>.      #
+#************************************************************************#
+
 tool
 extends EditorPlugin
 
-const applicants := [
-	#"CollisionShape",
-	#"CSGCombiner",
-	#"MeshInstance",
-	#"RigidBody",
-	#"Spatial",
+const classes := [
+	"Spatial",
+	"CSGCombiner",
+	"MeshInstance",
+	"RigidBody",
 	"StaticBody",
 ]
 const GizmoPlugin := preload("res://addons/extend/ExtendGizmoPlugin.gd")
@@ -19,7 +41,7 @@ var old_global_transform: Transform
 onready var undo_redo := get_undo_redo()
 
 func _init() -> void:
-	for v in applicants:
+	for v in classes:
 		var gizmo_plugin := GizmoPlugin.new(v, color)
 		gizmo_plugin.connect("start_drag", self, "start_drag")
 		gizmo_plugin.connect("end_drag", self, "end_drag")
