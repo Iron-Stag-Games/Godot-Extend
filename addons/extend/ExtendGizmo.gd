@@ -148,14 +148,18 @@ func set_handle(index: int, camera: Camera, point: Vector2) -> void:
 			2:
 				spatial.scale = Vector3(scale.x, scale.y, d)
 
-func commit_handle(index: int, restore, cancel := false) -> void:
+func commit_handle(_index: int, _restore, cancel := false) -> void:
 	dragging = false
-	gt = spatial.global_transform
-	scale = spatial.scale
-	get_plugin().emit_signal("end_drag", spatial)
+	if cancel:
+		spatial.global_transform = gt
+		spatial.scale = scale
+	else:
+		gt = spatial.global_transform
+		scale = spatial.scale
+		get_plugin().emit_signal("end_drag", spatial)
 
-func get_handle_name(index: int) -> String:
+func get_handle_name(_index: int) -> String:
 	return "Extend"
 
-func get_handle_value(index: int) -> String:
+func get_handle_value(_index: int) -> String:
 	return String(spatial.scale - scale)
